@@ -22,7 +22,6 @@ router.get('/:id', async (req, res) => {
 });
 
 router.get('/team/:teamId', async(req, res) => {
-    console.log('Ingresa a getTeam')
     const { teamId } = req.params;
     User.find({"team": teamId})
         .then((users) => {

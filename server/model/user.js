@@ -13,11 +13,17 @@ const userModel = new Schema({
   name: {
     type: String,
     required: true,
+    unique: true,
   },
   team: {
     type: Schema.Types.ObjectId,
     ref: 'teams',
+    required: true,
   },
+  role: {
+    type: String,
+    required: true,
+  }
 });
 
 module.exports = mongoose.model('users', userModel);

@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a class="navbar-brand" href="#">Sarcina</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -16,16 +16,7 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">
-              Home
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown" v-if="isLogin && getState.role == 'leader'">
             <a
               class="nav-link dropdown-toggle"
               href="#"
@@ -34,16 +25,16 @@
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
-            >Dropdown</a>
+            >Opciones</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
+              <a
+                class="dropdown-item"
+                href="modal"
+                data-toggle="modal"
+                data-target="#modalMember"
+              >Añadir Miembro</a>
+              <a class="dropdown-item" href="#">Ver Miembros</a>
             </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0" v-if="!isLogin">
@@ -58,30 +49,33 @@
           <button
             class="btn btn-outline-success my-2 my-sm-0"
             @click="logout"
-          >Logout</button>
+          >Logout {{getState.name}}</button>
         </form>
       </div>
     </nav>
     <ModalLogin />
+    <ModalMember />
   </div>
 </template>
 
 <script>
 import ModalLogin from "./ModalLogin";
-import { mapGetters, mapActions } from 'vuex';
+import ModalMember from "./ModalMember";
+import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
-    ModalLogin
+    ModalLogin,
+    ModalMember,
   },
   computed: {
-    ...mapGetters(['isLogin']),
+    ...mapGetters(["isLogin", "getState"])
   },
   methods: {
-    ...mapActions(['newUser']),
+    ...mapActions(["newUser"]),
     logout() {
-      this.newUser('');
-      $('#modalLogin').modal('toggle'); 
-      this.$router.push('/')
+      this.newUser("");
+      $("#modalLogin").modal("toggle");
+      this.$router.push("/");
     }
   }
 };

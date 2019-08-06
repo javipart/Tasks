@@ -14,6 +14,28 @@ router.get('/:id', async (req, res) => {
   res.send(task);
 });
 
+router.get('/team/:teamId', async (req, res) => {
+  const { teamId } = req.params;
+  Task.find({"team": teamId})
+    .populate('team')
+    .exec()
+    .then((tasks) => {
+      res.send({
+        tasks,
+      });
+    });
+});
+
+router.get('/user/:name', async (req, res) => {
+  const { name } = req.params;
+  Task.find({"responsable": name})
+    .then((tasks) => {
+      res.send({
+        tasks,
+      });
+    });
+});
+
 router.post('/', async (req, res) => {
   const task = new Task(req.body);
   await task.save();

@@ -14,6 +14,8 @@ router.post('/', async (req, res) => {
                         status: 'ok',
                         id: usr._id,
                         idTeam: usr.team,
+                        name: usr.name,
+                        role: usr.role,
                     });
                 };
             });
